@@ -17,6 +17,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   //final _auth = FirebaseAuth.instance;
   String amount;
+  DateTime date;
+  String category;
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +154,7 @@ class _HomeState extends State<Home> {
           child: Text(
             'Expense Analyzer',
             style: TextStyle(
-              fontSize: 30.0,
+              fontSize: 20.0,
               color: Colors.white,
             ),
           ),
@@ -170,32 +172,104 @@ class _HomeState extends State<Home> {
           )
         ],
       ),
-      body: ModalProgressHUD(
-        child: SafeArea(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+            SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: TextFormField(
+                  onChanged: (value) {
+                    amount = value;
+                  },
+                  style: TextStyle(color: Colors.black, fontSize: 16.0),
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20)),
+                    hintText: "Rs. 000",
+                    hintStyle:
+                    TextStyle(color: Colors.black, fontSize: 16.0),
+                  )),
+            ),
               SizedBox(
                 height: 10,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: TextFormField(
-                    onChanged: (value) {
-                      amount = value;
+                child:  Container(
+                  height: 80,
+                  child: CupertinoDatePicker(
+                    mode: CupertinoDatePickerMode.date,
+                    initialDateTime: DateTime.now(),
+                    onDateTimeChanged: (DateTime newDateTime) {
+                      date = newDateTime;
                     },
-                    style: TextStyle(color: Colors.black, fontSize: 16.0),
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      hintText: "Rs. 000",
-                      hintStyle:
-                      TextStyle(color: Colors.black, fontSize: 16.0),
-                    )),
+                  ),
+                ),
               ),
-            ]
+            SizedBox(
+              height: 20,
             ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: DropdownButton<String>(
+                  focusColor:Colors.white,
+                  value: category,
+                  //elevation: 5,
+                  style: TextStyle(color: Colors.white),
+                  iconEnabledColor:Colors.black,
+                  items: <String>[
+                    'Android',
+                    'IOS',
+                    'Flutter',
+                    'Node',
+                    'Java',
+                    'Python',
+                    'PHP',
+                  ].map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value,style:TextStyle(color:Colors.black),),
+                    );
+                  }).toList(),
+                  hint:Text(
+                    "Please choose a langauage",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 26,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  onChanged: (String value) {
+                    setState(() {
+                      category = value;
+                    });
+                  },
+                ),
+              ),
+              SizedBox(height: 20.0),
+              RaisedButton(
+                onPressed: () async {
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    'Add Expense',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50)),
+                color: Colors.blue,
+              ),
+          ]
           ),
         ),
       ),
