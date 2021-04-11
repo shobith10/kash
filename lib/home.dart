@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-//import 'instant.dart';
+import 'profile.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:kash/profile.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 //
 // import 'sign.dart';
@@ -53,7 +54,10 @@ class _HomeState extends State<Home> {
                   color: Colors.blue,
                 ),
               ),
-              // onTap: launchRating,
+               onTap: () async {
+                Navigator.push(context,
+                MaterialPageRoute(builder: (context) => Profile()));
+            },
             ),
             SizedBox(height: 10),
             ListTile(
