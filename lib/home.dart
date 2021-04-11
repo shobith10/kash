@@ -223,12 +223,12 @@ class _HomeState extends State<Home> {
                   style: TextStyle(color: Colors.white),
                   iconEnabledColor:Colors.black,
                   items: <String>[
-                    'Android',
-                    'IOS',
-                    'Flutter',
-                    'Node',
-                    'Java',
-                    'Python',
+                    'Food',
+                    'Electricity',
+                    'Travel',
+                    'Rent',
+                    'Cosmetics',
+                    'Grocery',
                     'PHP',
                   ].map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
@@ -237,7 +237,7 @@ class _HomeState extends State<Home> {
                     );
                   }).toList(),
                   hint:Text(
-                    "Please choose a langauage",
+                    "Please choose a category",
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 26,
