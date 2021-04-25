@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -19,26 +20,29 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.deepPurpleAccent,
+
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
         child: SafeArea(
           child: Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                SizedBox(
+                  height: 80,
+                ),
                 Text(
-                  'Sign In',
+                  'Kash',
                   style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
+                    color: Colors.deepPurple,
+                    fontSize: 80,
                     fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
                     
                   ),
                 ),
-                SizedBox(
-                  height: 10,
-                ),
+                  SizedBox(
+                    height: 30,
+                  ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: TextFormField(
@@ -52,9 +56,10 @@ class _SignInState extends State<SignIn> {
                         hintText: "EMAIL",
                         hintStyle:
                             TextStyle(color: Colors.black, fontSize: 16.0),
-                      )),
+                      )
+                  ),
                 ),
-                SizedBox(height: 10.0),
+                SizedBox(height: 20.0),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: TextFormField(
@@ -80,6 +85,9 @@ class _SignInState extends State<SignIn> {
                       fontSize: 16,
                     ),
                   ),
+                ),
+                SizedBox(
+                  height: 20,
                 ),
                 RaisedButton(
                   onPressed: () async {

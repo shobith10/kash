@@ -21,8 +21,10 @@ class _SignUpState extends State<SignUp> {
         child: SafeArea(
           child: Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                SizedBox(
+                  height: 80,
+                ),
                 Text(
                   'Sign Up',
                   style: TextStyle(
@@ -32,7 +34,7 @@ class _SignUpState extends State<SignUp> {
                   ),
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 40,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -49,7 +51,7 @@ class _SignUpState extends State<SignUp> {
                             TextStyle(color: Colors.black, fontSize: 16.0),
                       )),
                 ),
-                SizedBox(height: 10.0),
+                SizedBox(height: 30.0),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: TextFormField(
@@ -67,7 +69,7 @@ class _SignUpState extends State<SignUp> {
                       )),
                 ),
 
-                SizedBox(height: 10.0),
+                SizedBox(height: 30.0),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: TextFormField(
@@ -85,7 +87,7 @@ class _SignUpState extends State<SignUp> {
                       )),
                 ),
 
-                SizedBox(height: 20.0),
+                SizedBox(height: 30.0),
                 RaisedButton(
                   onPressed: () async {
                     Navigator.push(context,

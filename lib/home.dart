@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-
-import 'profile.dart';
+import 'package:flutter/services.dart';
+import 'package:kash/Business.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:kash/Savemoney.dart';
+import 'package:kash/aboutus.dart';
 import 'package:kash/profile.dart';
+import 'package:kash/settings.dart';
+import 'package:kash/sign.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 //
 // import 'sign.dart';
@@ -17,9 +21,10 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   //final _auth = FirebaseAuth.instance;
-  String amount;
+  int amount;
   DateTime date;
   String category;
+  String tag;
 
   @override
   Widget build(BuildContext context) {
@@ -69,9 +74,9 @@ class _HomeState extends State<Home> {
                   color: Colors.blue,
                 ),
               ),
-              onTap: () {
-                // Update the state of the app.
-                // ...
+              onTap: () async {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Business()));
               },
             ),
             SizedBox(height: 10),
@@ -84,11 +89,9 @@ class _HomeState extends State<Home> {
                   color: Colors.blue,
                 ),
               ),
-              onTap: () {
-                // Update the state of the app.
-                // // ...
-                // Navigator.push(context,
-                //     MaterialPageRoute(builder: (context) => AboutUs()));
+              onTap: () async {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Money()));
               },
             ),
             SizedBox(height: 10),
@@ -101,7 +104,10 @@ class _HomeState extends State<Home> {
                   color: Colors.blue,
                 ),
               ),
-              // onTap: SBMsite,
+              onTap: () async {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Settings()));
+              },
             ),
             SizedBox(height: 10),
             ListTile(
@@ -113,22 +119,30 @@ class _HomeState extends State<Home> {
                   color: Colors.blue,
                 ),
               ),
-              // onTap: SBMsite,
+              onTap: () async {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => AboutUs()));
+              },
             ),
+
             SizedBox(height: 10),
             ListTile(
               title: Text(
-                'Log Out',
+                'Log out',
                 style: TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold,
                   color: Colors.blue,
                 ),
               ),
-              // onTap: SBMsite,
+              onTap: () async {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SignIn()));
+              },
             ),
+
             Padding(
-              padding: const EdgeInsets.only(top: 130),
+              padding: const EdgeInsets.only(top: 70),
               child: Divider(
                 thickness: 1,
                 color: Colors.blue,
@@ -172,35 +186,43 @@ class _HomeState extends State<Home> {
               color: Colors.white,
               size: 30,
             ),
-            // onPressed: () => showAlertDialog(context),
+            onPressed: () async {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Profile()));
+            },
           )
         ],
       ),
       body: SafeArea(
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
             SizedBox(
-              height: 10,
+              height: 40,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: TextFormField(
+              child: TextField(
                   onChanged: (value) {
-                    amount = value;
+                    amount = value as int;
                   },
                   style: TextStyle(color: Colors.black, fontSize: 16.0),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+              FilteringTextInputFormatter.digitsOnly],
+
                   decoration: InputDecoration(
+                      labelText: "Enter your expense",
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20)),
+                          borderRadius: BorderRadius.circular(20)),
                     hintText: "Rs. 000",
                     hintStyle:
                     TextStyle(color: Colors.black, fontSize: 16.0),
-                  )),
+                  )
+              ),
             ),
               SizedBox(
-                height: 10,
+                height: 30,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -216,7 +238,7 @@ class _HomeState extends State<Home> {
                 ),
               ),
             SizedBox(
-              height: 20,
+              height: 30,
             ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -233,7 +255,7 @@ class _HomeState extends State<Home> {
                     'Rent',
                     'Cosmetics',
                     'Grocery',
-                    'PHP',
+                    'Others',
                   ].map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
@@ -241,7 +263,7 @@ class _HomeState extends State<Home> {
                     );
                   }).toList(),
                   hint:Text(
-                    "Please choose a category",
+                    "Category",
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 26,
@@ -254,6 +276,48 @@ class _HomeState extends State<Home> {
                   },
                 ),
               ),
+              SizedBox(
+                height: 30,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: TextField(
+                    onChanged: (value) {
+                      tag = value;
+                    },
+                    style: TextStyle(color: Colors.black, fontSize: 16.0),
+
+                    decoration: InputDecoration(
+                      labelText: "TAG",
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                      hintText: "Item",
+                      hintStyle:
+                      TextStyle(color: Colors.black, fontSize: 16.0),
+                    )
+
+                ),
+              ),
+              SizedBox(height: 20.0),
+              RaisedButton(
+                onPressed: () async {
+                },
+                child: Padding(
+
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    'Add Expense',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50)),
+                color: Colors.blue,
+              ),
               SizedBox(height: 20.0),
               RaisedButton(
                 onPressed: () async {
@@ -261,7 +325,7 @@ class _HomeState extends State<Home> {
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
-                    'Add Expense',
+                    'View/Edit',
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,

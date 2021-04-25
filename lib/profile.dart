@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -8,6 +9,8 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   String name;
+  String phone;
+  String occu;
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +30,10 @@ class _ProfileState extends State<Profile> {
           elevation: 0.0,
     ),
         body: SafeArea(
-          child: Center(
             child: Column(
-               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                height: 10,
+                height: 40,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -42,17 +43,101 @@ class _ProfileState extends State<Profile> {
                   },
                   style: TextStyle(color: Colors.black, fontSize: 16.0),
                   decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20)),
                   hintText: "Name",
                   hintStyle:
                   TextStyle(color: Colors.black, fontSize: 16.0),
                   )
                 ),
               ),
+                SizedBox(
+                  height: 30,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: TextFormField(
+                      onChanged: (value) {
+                        phone = value;
+                      },
+                      style: TextStyle(color: Colors.black, fontSize: 16.0),
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly],
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        hintText: "Phone number",
+                        hintStyle:
+                        TextStyle(color: Colors.black, fontSize: 16.0),
+                      )
+                  ),
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                  Padding(
+                   padding: const EdgeInsets.symmetric(horizontal: 30),
+                   child: TextFormField(
+                      onChanged: (value) {
+                        occu = value;
+                      },
+                      style: TextStyle(color: Colors.black, fontSize: 16.0),
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        hintText: "Occupation",
+                        hintStyle:
+                        TextStyle(color: Colors.black, fontSize: 16.0),
+                      )
+                  ),
 
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                        child: TextFormField(
+                            onChanged: (value) {
+                              occu = value;
+                            },
+                            style: TextStyle(color: Colors.black, fontSize: 16.0),
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20)),
+                              hintText: "Account details",
+                              hintStyle:
+                              TextStyle(color: Colors.black, fontSize: 16.0),
 
-            ]
+                            )
+                        ),
+                      ),
+                SizedBox(
+                  height: 30,
+                ),
+                RaisedButton(
+                  onPressed: () async {
+
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      'Update',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50)),
+                  color: Colors.blue,
+                ),
+              ]
           ),
-        ),
+
        ),
     );
   }

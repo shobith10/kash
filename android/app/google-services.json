@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1066846645589",
+    "project_id": "kash-3d0eb",
+    "storage_bucket": "kash-3d0eb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1066846645589:android:ad76fd2fc88b28446bd3dc",
+        "android_client_info": {
+          "package_name": "com.expenseAnalyser.kash"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1066846645589-f7jnevv28vl1af6rjvg1js63t4acm5ue.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcd7g1MyqW2imoWYEE7bhJl6Uj5x1p9GA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1066846645589-f7jnevv28vl1af6rjvg1js63t4acm5ue.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
