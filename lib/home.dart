@@ -338,6 +338,7 @@ class _HomeState extends State<Home> {
                       'category' : category,
                       'date' : date,
                           'reference' : tag
+
                     });
                 },
                 child: Padding(
