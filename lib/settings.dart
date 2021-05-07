@@ -3,12 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:kash/sign.dart';
 import 'package:settings_ui/settings_ui.dart';
 
-class Settings extends StatefulWidget {
+class Setting extends StatefulWidget {
   @override
   _SettingsState createState() => _SettingsState();
 }
 
-class _SettingsState extends State<Settings> {
+class _SettingsState extends State<Setting> {
   int value;
 
   @override

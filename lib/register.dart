@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-
-import 'sign.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'home.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -9,9 +9,12 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  final _auth = FirebaseAuth.instance;
   bool showSpinner = false;
   String email;
   String password;
+  String cpassword;
+
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +45,8 @@ class _SignUpState extends State<SignUp> {
                       onChanged: (value) {
                         email = value;
                       },
+                      keyboardType: TextInputType.emailAddress,
+                      textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.black, fontSize: 16.0),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
@@ -58,6 +63,7 @@ class _SignUpState extends State<SignUp> {
                       onChanged: (value) {
                         password = value;
                       },
+                      textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.black, fontSize: 16.0),
                       obscureText: true,
                       decoration: InputDecoration(
@@ -74,8 +80,9 @@ class _SignUpState extends State<SignUp> {
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: TextFormField(
                       onChanged: (value) {
-                        password = value;
+                        cpassword = value;
                       },
+                      textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.black, fontSize: 16.0),
                       obscureText: true,
                       decoration: InputDecoration(
@@ -90,8 +97,19 @@ class _SignUpState extends State<SignUp> {
                 SizedBox(height: 30.0),
                 RaisedButton(
                   onPressed: () async {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => SignIn()));
+                    try {
+                      final NewUser = await _auth
+                          .createUserWithEmailAndPassword(
+                          email: email, password: password);
+                      if(NewUser != null){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+                      }
+                    }
+                    catch(e){
+                      print(e);
+                    }
+                    // Navigator.push(context,
+                    //     MaterialPageRoute(builder: (context) => SignIn()));
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),

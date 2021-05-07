@@ -4,23 +4,53 @@ import 'package:kash/Business.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:kash/Savemoney.dart';
 import 'package:kash/aboutus.dart';
+import 'package:kash/edit.dart';
 import 'package:kash/profile.dart';
 import 'package:kash/settings.dart';
 import 'package:kash/sign.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
-//
-// import 'sign.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 class Home extends StatefulWidget {
+  static const String id = 'home';
   @override
   _HomeState createState() => _HomeState();
 }
 
 
 class _HomeState extends State<Home> {
-  //final _auth = FirebaseAuth.instance;
+  final _firestore = FirebaseFirestore.instance;
+  final _auth = FirebaseAuth.instance;
+  User loggedInUser;
+
+  @override
+  void initState(){
+    super.initState();
+    getCurrentUser();
+  }
+
+  void getCurrentUser() async{
+    try {
+      final user =
+          _auth.currentUser;
+      if (user != null) {
+        loggedInUser = user;
+      }
+    }
+    catch(e){
+      print(e);
+    }
+  }
+
+  // void expenseStream() async{
+  //   await for(var snapshot in _firestore.collection('expense').snapshots()){
+  //     for (var expense in snapshot.docs){
+  //       print(expense.data);
+  //     }
+  //   }
+  // }
+
   int amount;
   DateTime date;
   String category;
@@ -106,7 +136,7 @@ class _HomeState extends State<Home> {
               ),
               onTap: () async {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Settings()));
+                    MaterialPageRoute(builder: (context) => Setting()));
               },
             ),
             SizedBox(height: 10),
@@ -136,6 +166,7 @@ class _HomeState extends State<Home> {
                 ),
               ),
               onTap: () async {
+                _auth.signOut();
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => SignIn()));
               },
@@ -202,9 +233,9 @@ class _HomeState extends State<Home> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: TextField(
-                  onChanged: (value) {
-                    amount = value as int;
+              child: TextFormField(
+                  onChanged: ( value) {
+                    amount = int.parse(value);
                   },
                   style: TextStyle(color: Colors.black, fontSize: 16.0),
                   keyboardType: TextInputType.number,
@@ -301,6 +332,13 @@ class _HomeState extends State<Home> {
               SizedBox(height: 20.0),
               RaisedButton(
                 onPressed: () async {
+                   await _firestore.collection('users').doc(FirebaseAuth.instance.currentUser.email).collection('expense').add(
+                        {
+                      'amount': amount,
+                      'category' : category,
+                      'date' : date,
+                          'reference' : tag
+                    });
                 },
                 child: Padding(
 
@@ -321,6 +359,8 @@ class _HomeState extends State<Home> {
               SizedBox(height: 20.0),
               RaisedButton(
                 onPressed: () async {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Edit()));
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -346,3 +386,4 @@ class _HomeState extends State<Home> {
   }
 
 }
+

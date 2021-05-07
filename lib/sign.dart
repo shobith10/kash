@@ -4,6 +4,8 @@ import 'package:flutter/painting.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'register.dart';
 import 'home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 class SignIn extends StatefulWidget {
   @override
@@ -12,10 +14,9 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
   bool showSpinner = false;
-
-  //final _auth = FirebaseAuth.instance;
   String email;
   String password;
+  final _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +50,7 @@ class _SignInState extends State<SignIn> {
                       onChanged: (value) {
                         email = value;
                       },
+                      keyboardType: TextInputType.emailAddress,
                       style: TextStyle(color: Colors.black, fontSize: 16.0),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
@@ -91,8 +93,18 @@ class _SignInState extends State<SignIn> {
                 ),
                 RaisedButton(
                   onPressed: () async {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Home()));
+                    try {
+                      final user = await _auth.signInWithEmailAndPassword(
+                          email: email, password: password);
+                      if (user != null) {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Home()));
+                      }
+                    }
+                    catch(e){
+                      print(e);
+                    }
+
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
