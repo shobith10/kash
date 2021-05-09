@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -19,25 +20,25 @@ class _EditState extends State<Edit> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             StreamBuilder<QuerySnapshot>(
-              stream: _firestore
-                  .collection('users')
-                  .doc(FirebaseAuth.instance.currentUser.email)
-                  .collection('expense')
-                  .snapshots(),
+              stream: _firestore.collection('users').doc(FirebaseAuth.instance.currentUser.email).collection('expense').snapshots(),
               builder: (context, snapshot) {
                 print(snapshot.data.docs.length);
                 if(snapshot.hasData) {
-                  return ListView(
-                    children: snapshot.data.docs.map((document){
-                      return Container(
+                  final expenses = snapshot.data.docs;
+                  expenses.map((documents) {
+                    DataTable(
+                      rows: [
+                      DataRow(cells: [
+                            DataCell(documents['amount']),
+                            DataCell(documents['date']),
+                            DataCell(documents['category']),
+                            DataCell(documents['reference']),
+                          ]),
+                      ],
+                    );
+                  });
 
-                          child: Text('Amount : '+ document['category']),
-
-                      );
-                    }).toList(),
-                  );
-
-                      // DataTable(
+                  // DataTable(
                       //   columns: [
                       //     DataColumn(
                       //         label: Text('ID',
@@ -69,11 +70,7 @@ class _EditState extends State<Edit> {
                       //   title: Text(),
                       //   subtitle: Text(snapshot.data['date']),snapshot.data['amount']
                 }
-                else{
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
+                return Text('data');
               },
             )
           ],
@@ -82,3 +79,5 @@ class _EditState extends State<Edit> {
     );
   }
 }
+
+
