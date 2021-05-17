@@ -43,18 +43,11 @@ class _HomeState extends State<Home> {
     }
   }
 
-  // void expenseStream() async{
-  //   await for(var snapshot in _firestore.collection('expense').snapshots()){
-  //     for (var expense in snapshot.docs){
-  //       print(expense.data);
-  //     }
-  //   }
-  // }
-
   int amount;
   DateTime date;
   String category;
   String tag;
+  bool isUpdate;
 
   @override
   Widget build(BuildContext context) {
@@ -90,8 +83,21 @@ class _HomeState extends State<Home> {
                 ),
               ),
                onTap: () async {
-                Navigator.push(context,
-                MaterialPageRoute(builder: (context) => Profile()));
+
+                 StreamBuilder<QuerySnapshot>(
+                   stream: FirebaseFirestore.instance
+                     .collection('users')
+                     .doc(FirebaseAuth.instance.currentUser.email)
+                     .collection('profile')
+                     .snapshots(),
+                   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if(snapshot.hasData){
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Profile()));
+                    }
+                    return ;
+                   },
+                );
             },
             ),
             SizedBox(height: 10),
@@ -337,7 +343,7 @@ class _HomeState extends State<Home> {
                       'amount': amount,
                       'category' : category,
                       'date' : date,
-                          'reference' : tag,
+                      'reference' : tag,
                     });
                 },
                 child: Padding(

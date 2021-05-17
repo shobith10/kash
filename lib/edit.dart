@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class Edit extends StatefulWidget {
   @override
@@ -9,73 +10,84 @@ class Edit extends StatefulWidget {
 }
 
 class _EditState extends State<Edit> {
-  final _firestore = FirebaseFirestore.instance;
+  getCustomFormattedDateTime(Timestamp givenDateTime, String dateFormat) {
+    // dateFormat = 'MM/dd/yy';
+    final DateTime docDateTime = givenDateTime.toDate();
+    return DateFormat(dateFormat).format(docDateTime);
+  }
+
+  DateTime dt;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Padding(
+          padding: const EdgeInsets.all(30.0),
+          child: Text(
+            'Expense Analyzer',
+            style: TextStyle(
+              fontSize: 20.0,
+              color: Colors.white,
+            ),
+          ),
+        ),
+        backgroundColor: Colors.blue,
+        elevation: 0.0,
+      ),
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            StreamBuilder<QuerySnapshot>(
-              stream: _firestore.collection('users').doc(FirebaseAuth.instance.currentUser.email).collection('expense').snapshots(),
-              builder: (context, snapshot) {
-                print(snapshot.data.docs.length);
-                if(snapshot.hasData) {
-                  final expenses = snapshot.data.docs;
-                  expenses.map((documents) {
-                    DataTable(
-                      rows: [
-                      DataRow(cells: [
-                            DataCell(documents['amount']),
-                            DataCell(documents['date']),
-                            DataCell(documents['category']),
-                            DataCell(documents['reference']),
-                          ]),
-                      ],
-                    );
-                  });
+        child: StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance.collection('users')
+                .doc(
+                FirebaseAuth.instance.currentUser.email)
+                .collection(
+                'expense')
+                .snapshots(),
+            builder: (BuildContext context,
+                AsyncSnapshot<QuerySnapshot> snapshot) {
+              //print(snapshot.data.docs.length);
 
-                  // DataTable(
-                      //   columns: [
-                      //     DataColumn(
-                      //         label: Text('ID',
-                      //             style: TextStyle(
-                      //                 fontSize: 18,
-                      //                 fontWeight: FontWeight.bold))),
-                      //     DataColumn(
-                      //         label: Text('Name',
-                      //             style: TextStyle(
-                      //                 fontSize: 18,
-                      //                 fontWeight: FontWeight.bold))),
-                      //     DataColumn(
-                      //         label: Text('Profession',
-                      //             style: TextStyle(
-                      //                 fontSize: 18,
-                      //                 fontWeight: FontWeight.bold))),
-                      //   ],
-                      //
-                      //   rows: [
-                      //     DataRow(cells: [
-                      //       DataCell(Text(snapshot.data['amount'])),
-                      //       DataCell(Text(snapshot.data['date'])),
-                      //       DataCell(Text(snapshot.data['category'])),
-                      //       DataCell(Text(snapshot.data['category'])),
-                      //     ]),
-                      //   ],
-                      // )
-                      // ListTile(
-                      //   title: Text(),
-                      //   subtitle: Text(snapshot.data['date']),snapshot.data['amount']
-                }
-                return Text('data');
-              },
-            )
-          ],
+              if (snapshot.hasError) {
+                return CircularProgressIndicator();
+              }
+              return ListView(
+                  children: snapshot.data.docs.map((
+                      DocumentSnapshot documents) {
+                    return Container(
+                        child: Table(
+                            border: TableBorder.all(
+                                color: Colors.black,
+                                style: BorderStyle.solid,
+                                width: 2),
+                            children: [
+                              TableRow(
+                                  children: [
+                                    Column(children: [
+                                      Text(documents['amount'].toString()),
+                                    ],),
+
+                                    Column(children: [
+                                      Text(getCustomFormattedDateTime(
+                                          documents['date'], 'MM/dd/yy'))
+                                    ],),
+                                    Column(
+                                      children: [Text(documents['category'])],),
+                                    Column(
+                                      children: [
+                                        Text(documents['reference'])
+                                      ],),
+                                  ]
+                              )
+                            ]
+                        )
+                    );
+                  }
+                  ).toList()
+              );
+            }
         ),
       ),
+
     );
   }
 }

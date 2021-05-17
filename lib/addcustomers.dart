@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Addcustomer extends StatefulWidget {
   @override
@@ -45,9 +47,7 @@ class _Addcustomer extends State<Addcustomer> {
                      name = value;
                     },
                     style: TextStyle(color: Colors.black, fontSize: 16.0),
-                    keyboardType: TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly],
+
                     decoration: InputDecoration(
                       labelText: "Customer name",
                       border: OutlineInputBorder(
@@ -63,11 +63,12 @@ class _Addcustomer extends State<Addcustomer> {
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: TextField(
                     onChanged: (value) {
-                      phone = value as int;
+                      phone = int.parse(value);
                     },
                     style: TextStyle(color: Colors.black, fontSize: 16.0),
                     keyboardType: TextInputType.number,
                     inputFormatters: <TextInputFormatter>[
+
                       FilteringTextInputFormatter.digitsOnly],
 
                     decoration: InputDecoration(
@@ -86,7 +87,7 @@ class _Addcustomer extends State<Addcustomer> {
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: TextField(
                     onChanged: (value) {
-                      credit = value as int;
+                      credit = int.parse(value);
                     },
                     style: TextStyle(color: Colors.black, fontSize: 16.0),
                     keyboardType: TextInputType.number,
@@ -103,29 +104,29 @@ class _Addcustomer extends State<Addcustomer> {
                     )),
               ),
 
-              SizedBox(
-                height: 30,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: TextField(
-                    onChanged: (value) {
-                      credit = value as int;
-                    },
-                    style: TextStyle(color: Colors.black, fontSize: 16.0),
-                    keyboardType: TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly],
-
-                    decoration: InputDecoration(
-                      labelText: "Debit",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      hintText: "000",
-                      hintStyle:
-                      TextStyle(color: Colors.black, fontSize: 16.0),
-                    )),
-              ),
+              // SizedBox(
+              //   height: 30,
+              // ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 30),
+              //   child: TextField(
+              //       onChanged: (value) {
+              //         credit = value as int;
+              //       },
+              //       style: TextStyle(color: Colors.black, fontSize: 16.0),
+              //       keyboardType: TextInputType.number,
+              //       inputFormatters: <TextInputFormatter>[
+              //         FilteringTextInputFormatter.digitsOnly],
+              //
+              //       decoration: InputDecoration(
+              //         labelText: "Debit",
+              //         border: OutlineInputBorder(
+              //             borderRadius: BorderRadius.circular(20)),
+              //         hintText: "000",
+              //         hintStyle:
+              //         TextStyle(color: Colors.black, fontSize: 16.0),
+              //       )),
+              // ),
 
 
               SizedBox(
@@ -133,7 +134,12 @@ class _Addcustomer extends State<Addcustomer> {
               ),
               RaisedButton(
                 onPressed: () async {
-
+                  await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser.email).collection('customers').add(
+                      {
+                        'name': name,
+                        'phone' : phone,
+                        'credit' : credit,
+                      });
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),

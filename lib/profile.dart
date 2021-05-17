@@ -1,18 +1,25 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Profile extends StatefulWidget {
+
+
   @override
   _ProfileState createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
   String name;
-  String phone;
+  int phone;
   String occu;
+  String acc;
+  bool update;
 
   @override
+
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -36,6 +43,7 @@ class _ProfileState extends State<Profile> {
                 height: 40,
                 ),
                 Padding(
+
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: TextFormField(
                   onChanged: (value) {
@@ -45,11 +53,11 @@ class _ProfileState extends State<Profile> {
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20)),
-                  hintText: "Name",
+                  hintText: 'name',
                   hintStyle:
                   TextStyle(color: Colors.black, fontSize: 16.0),
                   )
-                ),
+                  ),
               ),
                 SizedBox(
                   height: 30,
@@ -58,7 +66,7 @@ class _ProfileState extends State<Profile> {
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: TextFormField(
                       onChanged: (value) {
-                        phone = value;
+                        phone = int.parse(value);
                       },
                       style: TextStyle(color: Colors.black, fontSize: 16.0),
                       keyboardType: TextInputType.number,
@@ -100,7 +108,7 @@ class _ProfileState extends State<Profile> {
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                         child: TextFormField(
                             onChanged: (value) {
-                              occu = value;
+                              acc = value;
                             },
                             style: TextStyle(color: Colors.black, fontSize: 16.0),
                             decoration: InputDecoration(
@@ -118,7 +126,14 @@ class _ProfileState extends State<Profile> {
                 ),
                 RaisedButton(
                   onPressed: () async {
-
+                    await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser.email).collection('profile').add(
+                        {
+                          'name': name,
+                          'phone' : phone,
+                          'occupation' : occu,
+                          'account' : acc,
+                          'isupdate': update=false,
+                        });
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
