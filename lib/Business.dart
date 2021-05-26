@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:kash/addcustomers.dart';
+import 'package:kash/viewcustomers.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Business extends StatefulWidget {
   @override
@@ -74,7 +77,7 @@ class _BusinessState extends State<Business> {
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
                             child: Text(
-                              'Total Debit\n 000',
+                              'Total Credit\n 000',
                               style: TextStyle(
                                 color: Colors.blue,
                                 fontWeight: FontWeight.bold,
@@ -127,7 +130,8 @@ class _BusinessState extends State<Business> {
             ),
             RaisedButton(
               onPressed: () async {
-
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Viewcus()));
               },
               child: Padding(
                 padding: const EdgeInsets.all(16.0),

@@ -51,8 +51,7 @@ class _EditnewState extends State<Editnew> {
                     rows: [
                       DataRow(
                           cells: [
-                            DataCell(Text(documents['amount'].toString()),showEditIcon: true,
-                            onTap: (){ }
+                            DataCell(Text(documents['amount'].toString()),
                             ),
                             DataCell(
                               Text( getCustomFormattedDateTime(documents['date'], 'MM/dd/yy'))

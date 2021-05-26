@@ -43,6 +43,7 @@ class _EditState extends State<Edit> {
                 .collection(
                 'expense')
                 .snapshots(),
+
             builder: (BuildContext context,
                 AsyncSnapshot<QuerySnapshot> snapshot) {
               //print(snapshot.data.docs.length);
@@ -53,34 +54,49 @@ class _EditState extends State<Edit> {
               return ListView(
                   children: snapshot.data.docs.map((
                       DocumentSnapshot documents) {
-                    return Container(
-                        child: Table(
-                            border: TableBorder.all(
-                                color: Colors.black,
-                                style: BorderStyle.solid,
-                                width: 2),
-                            children: [
-                              TableRow(
-                                  children: [
-                                    Column(children: [
-                                      Text(documents['amount'].toString()),
-                                    ],),
 
-                                    Column(children: [
-                                      Text(getCustomFormattedDateTime(
-                                          documents['date'], 'MM/dd/yy'))
-                                    ],),
-                                    Column(
-                                      children: [Text(documents['category'])],),
-                                    Column(
-                                      children: [
-                                        Text(documents['reference'])
-                                      ],),
-                                  ]
-                              )
-                            ]
-                        )
+                    return Card(
+                      elevation: 8.0,
+                      child: ListTile(
+                        leading: Text(getCustomFormattedDateTime(documents['date'], 'MM/dd/yy')),
+                        title: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(documents['amount'].toString()),
+                            Text(documents['category']),
+                            IconButton(icon: Icon(Icons.edit, color: Colors.grey,),onPressed: (){}),
+                            IconButton(icon: Icon(Icons.delete, color: Colors.red,), onPressed: (){})
+                          ],
+                        ),
+                        subtitle: Text(documents['reference']),
+                      ),
                     );
+                    // Container(
+                      //   margin: EdgeInsets.all(10),
+                    //     child: Table(
+                    //         border: TableBorder(horizontalInside: BorderSide(width: 2, color: Colors.blue, style: BorderStyle.solid)),
+                    //         children: [
+                    //           TableRow(
+                    //               children: [
+                    //                 Column(children: [
+                    //                   Text(documents['amount'].toString()),
+                    //                 ],),
+                    //
+                    //                 Column(children: [
+                    //                   Text(getCustomFormattedDateTime(
+                    //                       documents['date'], 'MM/dd/yy'))
+                    //                 ],),
+                    //                 Column(
+                    //                   children: [Text(documents['category'])],),
+                    //                 Column(
+                    //                   children: [
+                    //                     Text(documents['reference'])
+                    //                   ],),
+                    //               ]
+                    //           )
+                    //         ]
+                    //     )
+                    // );
                   }
                   ).toList()
               );

@@ -132,7 +132,6 @@ class _ProfileState extends State<Profile> {
                           'phone' : phone,
                           'occupation' : occu,
                           'account' : acc,
-                          'isupdate': update=false,
                         });
                   },
                   child: Padding(

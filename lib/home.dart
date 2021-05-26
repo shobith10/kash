@@ -84,20 +84,8 @@ class _HomeState extends State<Home> {
               ),
                onTap: () async {
 
-                 StreamBuilder<QuerySnapshot>(
-                   stream: FirebaseFirestore.instance
-                     .collection('users')
-                     .doc(FirebaseAuth.instance.currentUser.email)
-                     .collection('profile')
-                     .snapshots(),
-                   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if(snapshot.hasData){
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => Profile()));
-                    }
-                    return ;
-                   },
-                );
             },
             ),
             SizedBox(height: 10),
