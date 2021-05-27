@@ -140,6 +140,7 @@ class _Addcustomer extends State<Addcustomer> {
                         'phone' : phone,
                         'credit' : credit,
                       });
+                  _custadded(context);
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -162,4 +163,22 @@ class _Addcustomer extends State<Addcustomer> {
       ),
     );
   }
+
+  _custadded(BuildContext context){
+    return showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (param){
+          return AlertDialog(
+            actions: <Widget>[
+              FlatButton(onPressed:() => Navigator.pop(context),
+                  child: Text('OK')
+              ),
+            ],
+            title: Text('Customer Added !'),
+          );
+        }
+    );
+  }
+
 }

@@ -49,6 +49,8 @@ class _HomeState extends State<Home> {
   String tag;
   bool isUpdate;
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -313,7 +315,7 @@ class _HomeState extends State<Home> {
                     style: TextStyle(color: Colors.black, fontSize: 16.0),
 
                     decoration: InputDecoration(
-                      labelText: "TAG",
+                      labelText: "Reference",
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20)),
                       hintText: "Item",
@@ -333,6 +335,7 @@ class _HomeState extends State<Home> {
                       'date' : date,
                       'reference' : tag,
                     });
+                   _xpeseadded(context);
                 },
                 child: Padding(
 
@@ -376,6 +379,23 @@ class _HomeState extends State<Home> {
         ),
       ),
 
+    );
+  }
+
+  _xpeseadded(BuildContext context){
+    return showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (param){
+          return AlertDialog(
+            actions: <Widget>[
+              FlatButton(onPressed:() => Navigator.pop(context),
+                  child: Text('OK')
+              ),
+            ],
+            title: Text('Expense Added !'),
+          );
+        }
     );
   }
 

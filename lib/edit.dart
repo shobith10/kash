@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +43,7 @@ class _EditState extends State<Edit> {
                 .doc(
                 FirebaseAuth.instance.currentUser.email)
                 .collection(
-                'expense')
+                'expense').orderBy('date', descending: true)
                 .snapshots(),
 
             builder: (BuildContext context,
@@ -64,8 +66,7 @@ class _EditState extends State<Edit> {
                           children: <Widget>[
                             Text(documents['amount'].toString()),
                             Text(documents['category']),
-                            IconButton(icon: Icon(Icons.edit, color: Colors.grey,),onPressed: (){}),
-                            IconButton(icon: Icon(Icons.delete, color: Colors.red,), onPressed: (){})
+                            IconButton(icon: Icon(Icons.delete, color: Colors.red,), onPressed: (){ _deleFromDialog(context, documents.id); })
                           ],
                         ),
                         subtitle: Text(documents['reference']),
@@ -106,6 +107,29 @@ class _EditState extends State<Edit> {
 
     );
   }
+
+  _deleFromDialog(BuildContext context, String documentId){
+    return showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (param){
+          return AlertDialog(
+            actions: <Widget>[
+              FlatButton(onPressed:() => Navigator.pop(context),
+                  child: Text('NO')),
+              FlatButton(onPressed: () async{
+                await  FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser.email).collection('expense').doc(documentId).delete();
+                Navigator.pop(context);
+              },
+                  child: Text('YES'))
+            ],
+            title: Text('Do you want to DELETE ?'),
+          );
+        }
+    );
+  }
+
+
 }
 
 

@@ -7,11 +7,15 @@ class Viewcus extends StatefulWidget {
   @override
   _ViewcusState createState() => _ViewcusState();
 }
+
 class _ViewcusState extends State<Viewcus> {
+  String name;
+  int phone;
+  int credit;
+  int dcredit;
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Padding(
@@ -29,65 +33,182 @@ class _ViewcusState extends State<Viewcus> {
       ),
       body: SafeArea(
         child: StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance.collection('users')
-                .doc(
-                FirebaseAuth.instance.currentUser.email)
+            stream: FirebaseFirestore.instance
+                .collection('users')
+                .doc(FirebaseAuth.instance.currentUser.email)
                 .collection('customers')
                 .snapshots(),
-            builder: (BuildContext context,
-                AsyncSnapshot<QuerySnapshot> snapshot) {
-
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasError) {
                 return CircularProgressIndicator();
               }
               return ListView(
-                  children: snapshot.data.docs.map((
-                      DocumentSnapshot documents) {
-                    return Card(
-                      elevation: 8.0,
-                      child: ListTile(
-                        leading: Text(documents['name']),
-                        title: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                          Text(documents['phone'].toString()),
-                            Text(documents['credit'].toString()),
-                            IconButton(icon: Icon(Icons.edit, color: Colors.grey,),onPressed: (){}),
-                            IconButton(icon: Icon(Icons.delete, color: Colors.red,), onPressed: (){})
-                          ],
-                        ),
-                      ),
-                    );
-
-                    //   Container(
-                    //     child: Table(
-                    //         border: TableBorder.all(
-                    //             color: Colors.black,
-                    //             style: BorderStyle.solid,
-                    //             width: 2),
-                    //         children: [
-                    //           TableRow(
-                    //               children: [
-                    //                 Column(children: [
-                    //                   Text(documents['name']),
-                    //                 ],),
-                    //                 Column(children: [
-                    //                   Text(
-                    //                       documents['phone'].toString())
-                    //                 ],),
-                    //                 Column(
-                    //                   children: [Text(documents['credit'].toString())],),
-                    //               ]
-                    //           )
-                    //         ]
-                    //     )
-                    // );
-                  }
-                  ).toList()
-              );
-            }
-        ),
+                  children:
+                      snapshot.data.docs.map((DocumentSnapshot documents) {
+                return Card(
+                  elevation: 8.0,
+                  child: ListTile(
+                    leading: Text(documents['name']),
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(documents['phone'].toString()),
+                        Text(documents['credit'].toString()),
+                        IconButton(
+                            icon: Icon(Icons.remove, color: Colors.black45),
+                            onPressed: () {}),
+                        IconButton(
+                            icon: Icon(Icons.add, color: Colors.black45),
+                            onPressed: () { _addCredit(context, documents['credit'], documents.id); }),
+                        IconButton(
+                            icon: Icon(
+                              Icons.edit,
+                              color: Colors.grey,
+                            ),
+                            onPressed: () {
+                              _editFormDialog(context, documents.id);
+                            }),
+                      ],
+                    ),
+                  ),
+                );
+              }).toList());
+            }),
       ),
     );
+  }
+
+  _deleFromDialog(BuildContext context, String documentId) {
+    return showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (param) {
+          return AlertDialog(
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: () => Navigator.pop(context), child: Text('NO')),
+              FlatButton(
+                  onPressed: () async {
+                    await FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(FirebaseAuth.instance.currentUser.email)
+                        .collection('customers')
+                        .doc(documentId)
+                        .delete();
+                    Navigator.pop(context);
+                  },
+                  child: Text('YES'))
+            ],
+            title: Text('Do you want to DELETE ?'),
+          );
+        });
+  }
+
+  _addCredit(BuildContext context, int addcredit, String documentId) {
+    return showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (param) {
+          return AlertDialog(
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text('Cancel')),
+              FlatButton(
+                  onPressed: () async {
+                    addcredit = addcredit + dcredit;
+                    await FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(FirebaseAuth.instance.currentUser.email)
+                        .collection('customers')
+                        .doc(documentId)
+                        .update({'credit': addcredit});
+                    Navigator.pop(context);
+                  },
+                  child: Text('Update'))
+            ],
+            title: Text('Add Credit'),
+            content: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  TextField(
+                    onChanged: (value) {
+                      dcredit = int.parse(value);
+                    },
+                    decoration: InputDecoration(
+                        hintText: 'Add credit', labelText: 'Credit'),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  _editFormDialog(BuildContext context, String documentId) {
+    return showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (param) {
+          return AlertDialog(
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text('Cancel')),
+              FlatButton(
+                  onPressed: () async {
+                    await FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(FirebaseAuth.instance.currentUser.email)
+                        .collection('customers')
+                        .doc(documentId)
+                        .update({
+                      'name': name,
+                      'phone': phone,
+                      'credit': credit,
+                    });
+                    Navigator.pop(context);
+                  },
+                  child: Text('Update')),
+              IconButton(
+                  icon: Icon(
+                    Icons.delete,
+                    color: Colors.red,
+                  ),
+                  onPressed: () {
+                    _deleFromDialog(context, documentId);
+                  }),
+            ],
+            title: Text('Edit Customer'),
+            content: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  TextField(
+                    onChanged: (value) {
+                      name = value;
+                    },
+                    decoration: InputDecoration(
+                        hintText: 'Edit name', labelText: 'Name'),
+                  ),
+                  TextField(
+                    onChanged: (value) {
+                      phone = int.parse(value);
+                    },
+                    decoration: InputDecoration(
+                        hintText: 'Edit phonenumber', labelText: 'Phone'),
+                  ),
+                  TextField(
+                    onChanged: (value) {
+                      credit = int.parse(value);
+                    },
+                    decoration: InputDecoration(
+                        hintText: 'Edit credit', labelText: 'Credit'),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
   }
 }
