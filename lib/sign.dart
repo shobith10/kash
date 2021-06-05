@@ -21,7 +21,6 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
         child: SafeArea(

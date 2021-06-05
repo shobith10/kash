@@ -13,6 +13,7 @@ class _ViewcusState extends State<Viewcus> {
   int phone;
   int credit;
   int dcredit;
+  int rcredit;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +58,7 @@ class _ViewcusState extends State<Viewcus> {
                         Text(documents['credit'].toString()),
                         IconButton(
                             icon: Icon(Icons.remove, color: Colors.black45),
-                            onPressed: () {}),
+                            onPressed: () { _removeCredit(context, documents['credit'], documents.id); }),
                         IconButton(
                             icon: Icon(Icons.add, color: Colors.black45),
                             onPressed: () { _addCredit(context, documents['credit'], documents.id); }),
@@ -67,7 +68,7 @@ class _ViewcusState extends State<Viewcus> {
                               color: Colors.grey,
                             ),
                             onPressed: () {
-                              _editFormDialog(context, documents.id);
+                              _editFormDialog(context, documents.id, documents['name']);
                             }),
                       ],
                     ),
@@ -79,7 +80,7 @@ class _ViewcusState extends State<Viewcus> {
     );
   }
 
-  _deleFromDialog(BuildContext context, String documentId) {
+  _deleFromDialog(BuildContext context, String documentId, String nmdel) {
     return showDialog(
         context: context,
         barrierDismissible: true,
@@ -100,7 +101,48 @@ class _ViewcusState extends State<Viewcus> {
                   },
                   child: Text('YES'))
             ],
-            title: Text('Do you want to DELETE ?'),
+            title: Text('Do you want to Delete the customer ${nmdel} ?'),
+          );
+        });
+  }
+
+  _removeCredit(BuildContext context, int rmcredit, String documentId,){
+    return showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (param) {
+          return AlertDialog(
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text('Cancel')),
+              FlatButton(
+                  onPressed: () async {
+                    rmcredit = rmcredit - rcredit;
+                    await FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(FirebaseAuth.instance.currentUser.email)
+                        .collection('customers')
+                        .doc(documentId)
+                        .update({'credit': rmcredit});
+                    Navigator.pop(context);
+                  },
+                  child: Text('Update'))
+            ],
+            title: Text('Remove Credit'),
+            content: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  TextField(
+                    onChanged: (value) {
+                      rcredit = int.parse(value);
+                    },
+                    decoration: InputDecoration(
+                        hintText: 'Remove credit', labelText: 'Credit'),
+                  ),
+                ],
+              ),
+            ),
           );
         });
   }
@@ -146,7 +188,7 @@ class _ViewcusState extends State<Viewcus> {
         });
   }
 
-  _editFormDialog(BuildContext context, String documentId) {
+  _editFormDialog(BuildContext context, String documentId, String delnm) {
     return showDialog(
         context: context,
         barrierDismissible: true,
@@ -177,7 +219,7 @@ class _ViewcusState extends State<Viewcus> {
                     color: Colors.red,
                   ),
                   onPressed: () {
-                    _deleFromDialog(context, documentId);
+                    _deleFromDialog(context, documentId, delnm);
                   }),
             ],
             title: Text('Edit Customer'),

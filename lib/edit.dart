@@ -40,10 +40,9 @@ class _EditState extends State<Edit> {
       body: SafeArea(
         child: StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance.collection('users')
-                .doc(
-                FirebaseAuth.instance.currentUser.email)
-                .collection(
-                'expense').orderBy('date', descending: true)
+                .doc(FirebaseAuth.instance.currentUser.email)
+                .collection('expense')
+                .orderBy('date', descending: true)
                 .snapshots(),
 
             builder: (BuildContext context,
@@ -56,7 +55,6 @@ class _EditState extends State<Edit> {
               return ListView(
                   children: snapshot.data.docs.map((
                       DocumentSnapshot documents) {
-
                     return Card(
                       elevation: 8.0,
                       child: ListTile(
@@ -66,7 +64,7 @@ class _EditState extends State<Edit> {
                           children: <Widget>[
                             Text(documents['amount'].toString()),
                             Text(documents['category']),
-                            IconButton(icon: Icon(Icons.delete, color: Colors.red,), onPressed: (){ _deleFromDialog(context, documents.id); })
+                            IconButton(icon: Icon(Icons.delete, color: Colors.red,), onPressed: (){ _deleFromDialog(context, documents.id, documents['amount']); })
                           ],
                         ),
                         subtitle: Text(documents['reference']),
@@ -108,7 +106,7 @@ class _EditState extends State<Edit> {
     );
   }
 
-  _deleFromDialog(BuildContext context, String documentId){
+  _deleFromDialog(BuildContext context, String documentId, int amt){
     return showDialog(
         context: context,
         barrierDismissible: true,
@@ -123,7 +121,7 @@ class _EditState extends State<Edit> {
               },
                   child: Text('YES'))
             ],
-            title: Text('Do you want to DELETE ?'),
+            title: Text('Do you want to Delete the expense ${amt} ?'),
           );
         }
     );

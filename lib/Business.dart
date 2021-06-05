@@ -37,43 +37,10 @@ class _BusinessState extends State<Business> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(12.0),
-                    child: Container(
-                      child: Center(
-                        heightFactor: 4.5,
-                        widthFactor: 1.57,
-                        child: Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Text(
-                            'Total Credit\n 000',
-                            style: TextStyle(
-                              color: Colors.blue,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                            color: Colors.black87,
-                            width: 4.0,
-                            style: BorderStyle.solid),
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10.0),
-                          topRight: Radius.circular(10.0),
-                          bottomLeft: Radius.circular(10.0),
-                          bottomRight: Radius.circular(10.0),
-                        ),
-                      ),
-                    ),
-                ),
-
-                Padding(
-                  padding: const EdgeInsets.all(5.0),
-                    child: Container(
+                      child: Container(
                         child: Center(
-                          heightFactor: 4.5,
-                          widthFactor: 1.57,
+                          heightFactor: 3.5,
+                          widthFactor: 3.2,
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
                             child: Text(
@@ -97,9 +64,42 @@ class _BusinessState extends State<Business> {
                             bottomLeft: Radius.circular(10.0),
                             bottomRight: Radius.circular(10.0),
                           ),
-                        )
-                    ),
-                  ),
+                        ),
+                      ),
+                ),
+
+                // Padding(
+                //   padding: const EdgeInsets.all(5.0),
+                //     child: Container(
+                //         child: Center(
+                //           heightFactor: 4.5,
+                //           widthFactor: 1.57,
+                //           child: Padding(
+                //             padding: const EdgeInsets.all(5.0),
+                //             child: Text(
+                //               'Total Credit\n 000',
+                //               style: TextStyle(
+                //                 color: Colors.blue,
+                //                 fontWeight: FontWeight.bold,
+                //                 fontSize: 20,
+                //               ),
+                //             ),
+                //           ),
+                //         ),
+                //         decoration: BoxDecoration(
+                //           border: Border.all(
+                //               color: Colors.black87,
+                //               width: 4.0,
+                //               style: BorderStyle.solid),
+                //           borderRadius: BorderRadius.only(
+                //             topLeft: Radius.circular(10.0),
+                //             topRight: Radius.circular(10.0),
+                //             bottomLeft: Radius.circular(10.0),
+                //             bottomRight: Radius.circular(10.0),
+                //           ),
+                //         )
+                //     ),
+                //   ),
               ],
             ),
             SizedBox(
@@ -151,7 +151,9 @@ class _BusinessState extends State<Business> {
           ],
         ),
       ),
-
     );
   }
+  
+  
+  
 }
