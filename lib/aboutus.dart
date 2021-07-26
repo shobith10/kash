@@ -50,6 +50,18 @@ class _AboutUsState extends State<AboutUs> {
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
+                        'mail us: app21kash@gmail.com',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
                         'Version: v1.0',
                         style: TextStyle(
                           fontSize: 20,

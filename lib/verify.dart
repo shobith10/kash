@@ -12,8 +12,8 @@ class _VerifyState extends State<Verify> {
 
   Widget build(BuildContext context) {
     String _email;
-
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Padding(
           padding: const EdgeInsets.all(30.0),
@@ -32,6 +32,9 @@ class _VerifyState extends State<Verify> {
         child: Center(
           child: Column(
             children: [
+              SizedBox(
+                height: 40,
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: TextFormField(
@@ -49,10 +52,12 @@ class _VerifyState extends State<Verify> {
                     )
                 ),
               ),
-
+              SizedBox(
+                height: 40,
+              ),
               RaisedButton(
                 onPressed: () async {
-
+                  FirebaseAuth.instance.sendPasswordResetEmail(email: _email);
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -75,4 +80,6 @@ class _VerifyState extends State<Verify> {
       ),
     );
   }
+
+
 }

@@ -54,6 +54,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       drawer: Drawer(
         child: ListView(
           // Important: Remove any padding from the ListView.
@@ -85,7 +86,6 @@ class _HomeState extends State<Home> {
                 ),
               ),
                onTap: () async {
-
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => Profile()));
             },
@@ -242,7 +242,7 @@ class _HomeState extends State<Home> {
                       labelText: "Enter your expense",
                     border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20)),
-                    hintText: "Rs. 000",
+                    hintText: "000",
                     hintStyle:
                     TextStyle(color: Colors.black, fontSize: 16.0),
                   )
@@ -282,6 +282,7 @@ class _HomeState extends State<Home> {
                     'Rent',
                     'Cosmetics',
                     'Grocery',
+                    'Medical',
                     'Others',
                   ].map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(

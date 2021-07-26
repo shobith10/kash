@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:kash/verify.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'register.dart';
 import 'home.dart';
@@ -21,6 +22,7 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
         child: SafeArea(
@@ -78,7 +80,10 @@ class _SignInState extends State<SignIn> {
                       )),
                 ),
                 FlatButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Verify()));
+                  },
                   child: Text(
                     'Forgot Password?',
                     style: TextStyle(

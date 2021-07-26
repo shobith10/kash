@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:kash/plan.dart';
 
 class Money extends StatefulWidget {
   @override
@@ -14,10 +15,14 @@ class _MoneyState extends State<Money> {
   int month;
   int bsal;
   String purpose;
+  int ts;
+  int plan;
+  int mplan;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Padding(
           padding: const EdgeInsets.all(30.0),
@@ -109,6 +114,7 @@ class _MoneyState extends State<Money> {
                   child: TextField(
                       onChanged: (value) {
                         bsal = int.parse(value);
+
                       },
                       style: TextStyle(color: Colors.black, fontSize: 16.0),
                       keyboardType: TextInputType.number,
@@ -133,10 +139,11 @@ class _MoneyState extends State<Money> {
                         {
                           'purpose': purpose,
                           'target' : tamount,
-                          'tp' : month,
+                          'monthp' : month,
+                          'maxex': ((bsal*month)-tamount)/month,
                           'basic': bsal
                         });
-
+                    _xpeseadded(context);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -153,10 +160,50 @@ class _MoneyState extends State<Money> {
                       borderRadius: BorderRadius.circular(50)),
                   color: Colors.blue,
                 ),
+                SizedBox(
+                  height: 30,
+                ),
+                RaisedButton(
+                  onPressed: () async {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Plan()));
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      'View Plan',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50)),
+                  color: Colors.blue,
+                )
               ],
             ),
           ),
       ),
+    );
+  }
+
+  _xpeseadded(BuildContext context){
+    return showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (param){
+          return AlertDialog(
+            actions: <Widget>[
+              FlatButton(onPressed:() => Navigator.pop(context),
+                  child: Text('OK')
+              ),
+            ],
+            title: Text('Plan generated !'),
+          );
+        }
     );
   }
 }

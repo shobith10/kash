@@ -11,6 +11,46 @@ class Edit extends StatefulWidget {
   _EditState createState() => _EditState();
 }
 
+class Filter extends StatefulWidget {
+  @override
+  _FilterState createState() => _FilterState();
+}
+
+class _FilterState extends State<Edit> {
+
+  @override
+  Widget build(BuildContext context){
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: [
+            RaisedButton(
+              onPressed: () async {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Edit()));
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  'View/Edit',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50)),
+              color: Colors.blue,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class _EditState extends State<Edit> {
   getCustomFormattedDateTime(Timestamp givenDateTime, String dateFormat) {
     // dateFormat = 'MM/dd/yy';
@@ -23,6 +63,7 @@ class _EditState extends State<Edit> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Padding(
           padding: const EdgeInsets.all(30.0),
@@ -70,32 +111,6 @@ class _EditState extends State<Edit> {
                         subtitle: Text(documents['reference']),
                       ),
                     );
-                    // Container(
-                      //   margin: EdgeInsets.all(10),
-                    //     child: Table(
-                    //         border: TableBorder(horizontalInside: BorderSide(width: 2, color: Colors.blue, style: BorderStyle.solid)),
-                    //         children: [
-                    //           TableRow(
-                    //               children: [
-                    //                 Column(children: [
-                    //                   Text(documents['amount'].toString()),
-                    //                 ],),
-                    //
-                    //                 Column(children: [
-                    //                   Text(getCustomFormattedDateTime(
-                    //                       documents['date'], 'MM/dd/yy'))
-                    //                 ],),
-                    //                 Column(
-                    //                   children: [Text(documents['category'])],),
-                    //                 Column(
-                    //                   children: [
-                    //                     Text(documents['reference'])
-                    //                   ],),
-                    //               ]
-                    //           )
-                    //         ]
-                    //     )
-                    // );
                   }
                   ).toList()
               );

@@ -14,6 +14,7 @@ class _SettingsState extends State<Setting> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Padding(
           padding: const EdgeInsets.all(30.0),

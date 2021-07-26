@@ -16,6 +16,7 @@ class _BusinessState extends State<Business> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Padding(
           padding: const EdgeInsets.all(30.0),
@@ -44,7 +45,7 @@ class _BusinessState extends State<Business> {
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
                             child: Text(
-                              'Total Credit\n 000',
+                              'Total Credit\n 5125',
                               style: TextStyle(
                                 color: Colors.blue,
                                 fontWeight: FontWeight.bold,

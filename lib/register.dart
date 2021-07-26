@@ -19,6 +19,7 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
         child: SafeArea(
@@ -54,7 +55,14 @@ class _SignUpState extends State<SignUp> {
                         hintText: "Email",
                         hintStyle:
                             TextStyle(color: Colors.black, fontSize: 16.0),
-                      )),
+                      ),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                  ),
                 ),
                 SizedBox(height: 30.0),
                 Padding(
