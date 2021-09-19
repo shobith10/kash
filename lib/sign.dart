@@ -22,123 +22,136 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: Colors.blueGrey,
       resizeToAvoidBottomInset: false,
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
         child: SafeArea(
           child: Center(
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 80,
-                ),
-                Text(
-                  'Kash',
-                  style: TextStyle(
-                    color: Colors.deepPurple,
-                    fontSize: 80,
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic,
-                    
-                  ),
-                ),
+            child: Container(
+              height: 560,
+              width: 350,
+              padding: EdgeInsets.all(20),
+              margin: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.circular(10)
+              ),
+              child: Column(
+                children: [
                   SizedBox(
-                    height: 30,
+                    height: 40,
                   ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: TextFormField(
-                      onChanged: (value) {
-                        email = value;
-                      },
-                      keyboardType: TextInputType.emailAddress,
-                      style: TextStyle(color: Colors.black, fontSize: 16.0),
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        hintText: "EMAIL",
-                        hintStyle:
-                            TextStyle(color: Colors.black, fontSize: 16.0),
-                      )
-                  ),
-                ),
-                SizedBox(height: 20.0),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: TextFormField(
-                      onChanged: (value) {
-                        password = value;
-                      },
-                      style: TextStyle(color: Colors.black, fontSize: 16.0),
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        hintText: "PASSWORD",
-                        hintStyle:
-                            TextStyle(color: Colors.black, fontSize: 16.0),
-                      )),
-                ),
-                FlatButton(
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Verify()));
-                  },
-                  child: Text(
-                    'Forgot Password?',
+
+                  Text(
+                    'Kash',
                     style: TextStyle(
-                      color: Colors.blue,
-                      fontSize: 16,
+                      color: Colors.deepPurple,
+                      fontSize: 80,
+                      fontWeight: FontWeight.bold,
+                      fontStyle: FontStyle.italic,
+
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                RaisedButton(
-                  onPressed: () async {
-                    try {
-                      final user = await _auth.signInWithEmailAndPassword(
-                          email: email, password: password);
-                      if (user != null) {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Home()));
-                      }
-                    }
-                    catch(e){
-                      print(e);
-                    }
-
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    SizedBox(
+                      height: 30,
+                    ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    child: TextFormField(
+                        onChanged: (value) {
+                          email = value;
+                        },
+                        keyboardType: TextInputType.emailAddress,
+                        style: TextStyle(color: Colors.white, fontSize: 16.0),
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          hintText: "EMAIL",
+                          hintStyle:
+                              TextStyle(color: Colors.grey, fontSize: 16.0),
+                        )
+                    ),
+                  ),
+                  SizedBox(height: 20.0),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    child: TextFormField(
+                        onChanged: (value) {
+                          password = value;
+                        },
+                        style: TextStyle(color: Colors.white, fontSize: 16.0),
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          hintText: "PASSWORD",
+                          hintStyle:
+                              TextStyle(color: Colors.grey, fontSize: 16.0),
+                        )),
+                  ),
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Verify()));
+                    },
                     child: Text(
-                      'Sign In',
+                      'FORGOT PASSWORD?',
                       style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
+                        color: Colors.blue,
+                        fontSize: 16,
                       ),
                     ),
                   ),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50)),
-                  color: Colors.blue,
-                ),
-                FlatButton(
-                  onPressed: () async {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => SignUp()));
-                  },
-                  child: Text(
-                    'Create New Account?',
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontSize: 16,
+                  SizedBox(
+                    height: 20,
+                  ),
+                  RaisedButton(
+                    onPressed: () async {
+                      try {
+                        final user = await _auth.signInWithEmailAndPassword(
+                            email: email, password: password);
+                        if (user != null) {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => Home()));
+                        }
+                      }
+                      catch(e){
+                        print(e);
+                      }
+
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        'SIGN IN',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(40)),
+                    color: Colors.blue,
+                  ),
+                  FlatButton(
+                    onPressed: () async {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => SignUp()));
+                    },
+                    child: Text(
+                      'New User?',
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 16,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
+
             ),
           ),
         ),

@@ -213,6 +213,7 @@ class _HomeState extends State<Home> {
               color: Colors.white,
               size: 30,
             ),
+
             onPressed: () async {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => Profile()));
