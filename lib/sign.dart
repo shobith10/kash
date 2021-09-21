@@ -133,7 +133,7 @@ class _SignInState extends State<SignIn> {
                       ),
                     ),
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(40)),
+                        borderRadius: BorderRadius.circular(15)),
                     color: Colors.blue,
                   ),
                   FlatButton(
