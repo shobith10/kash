@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:kash/phoneauth.dart';
 import 'package:kash/verify.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'register.dart';
@@ -29,7 +30,7 @@ class _SignInState extends State<SignIn> {
         child: SafeArea(
           child: Center(
             child: Container(
-              height: 560,
+              height: 600,
               width: 350,
               padding: EdgeInsets.all(20),
               margin: EdgeInsets.all(20),
@@ -119,7 +120,6 @@ class _SignInState extends State<SignIn> {
                       catch(e){
                         print(e);
                       }
-
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
@@ -132,6 +132,28 @@ class _SignInState extends State<SignIn> {
                         ),
                       ),
                     ),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    color: Colors.blue,
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  RaisedButton(
+                      onPressed: () async {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => PhAuth()));
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      'SIGNIN with PHONE',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15)),
                     color: Colors.blue,
