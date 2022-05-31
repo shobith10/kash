@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -59,17 +58,24 @@ class _ViewcusState extends State<Viewcus> {
                         Text(documents['credit'].toString()),
                         IconButton(
                             icon: Icon(Icons.remove, color: Colors.black45),
-                            onPressed: () { _removeCredit(context, documents['credit'], documents.id); }),
+                            onPressed: () {
+                              _removeCredit(
+                                  context, documents['credit'], documents.id);
+                            }),
                         IconButton(
                             icon: Icon(Icons.add, color: Colors.black45),
-                            onPressed: () { _addCredit(context, documents['credit'], documents.id); }),
+                            onPressed: () {
+                              _addCredit(
+                                  context, documents['credit'], documents.id);
+                            }),
                         IconButton(
                             icon: Icon(
                               Icons.edit,
                               color: Colors.grey,
                             ),
                             onPressed: () {
-                              _editFormDialog(context, documents.id, documents['name']);
+                              _editFormDialog(
+                                  context, documents.id, documents['name']);
                             }),
                       ],
                     ),
@@ -102,12 +108,16 @@ class _ViewcusState extends State<Viewcus> {
                   },
                   child: Text('YES'))
             ],
-            title: Text('Do you want to Delete the customer ${nmdel} ?'),
+            title: Text('Do you want to Delete the customer $nmdel ?'),
           );
         });
   }
 
-  _removeCredit(BuildContext context, int rmcredit, String documentId,){
+  _removeCredit(
+    BuildContext context,
+    int rmcredit,
+    String documentId,
+  ) {
     return showDialog(
         context: context,
         barrierDismissible: true,

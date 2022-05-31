@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
@@ -12,13 +11,13 @@ class Editnew extends StatefulWidget {
 class _EditnewState extends State<Editnew> {
   getCustomFormattedDateTime(Timestamp givenDateTime, String dateFormat) {
     // dateFormat = 'MM/dd/yy';
-    final DateTime docDateTime = givenDateTime.toDate() ;
+    final DateTime docDateTime = givenDateTime.toDate();
     return DateFormat(dateFormat).format(docDateTime);
   }
+
   DateTime dt;
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Padding(
@@ -36,11 +35,16 @@ class _EditnewState extends State<Editnew> {
       ),
       body: SafeArea(
         child: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser.email).collection('expense').snapshots(),
-          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          stream: FirebaseFirestore.instance
+              .collection('users')
+              .doc(FirebaseAuth.instance.currentUser.email)
+              .collection('expense')
+              .snapshots(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             //print(snapshot.data.docs.length);
 
-            if(snapshot.hasError) {
+            if (snapshot.hasError) {
               return CircularProgressIndicator();
             }
             return ListView(
@@ -49,17 +53,19 @@ class _EditnewState extends State<Editnew> {
                   margin: EdgeInsets.all(10),
                   child: DataTable(
                     rows: [
-                      DataRow(
-                          cells: [
-                            DataCell(Text(documents['amount'].toString()),
-                            ),
-                            DataCell(
-                              Text( getCustomFormattedDateTime(documents['date'], 'MM/dd/yy'))
-                            ),
-                            DataCell( Text(documents['category']),),
-                            DataCell(Text(documents['reference']),),
-                          ]
-                      )
+                      DataRow(cells: [
+                        DataCell(
+                          Text(documents['amount'].toString()),
+                        ),
+                        DataCell(Text(getCustomFormattedDateTime(
+                            documents['date'], 'MM/dd/yy'))),
+                        DataCell(
+                          Text(documents['category']),
+                        ),
+                        DataCell(
+                          Text(documents['reference']),
+                        ),
+                      ])
                     ],
                   ),
                 );
@@ -69,8 +75,5 @@ class _EditnewState extends State<Editnew> {
         ),
       ),
     );
-
   }
 }
-
-

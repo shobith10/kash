@@ -12,7 +12,9 @@ Future<void> main() async {
   await Firebase.initializeApp();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    theme: ThemeData(primaryColor: Colors.blue, accentColor: Colors.blueAccent),
+    theme: ThemeData(
+      primaryColor: Colors.blue,
+    ),
     home: Splash(),
     routes: routes,
   ));

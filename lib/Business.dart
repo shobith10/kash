@@ -1,9 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:kash/addcustomers.dart';
 import 'package:kash/viewcustomers.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Business extends StatefulWidget {
   @override
@@ -38,35 +35,35 @@ class _BusinessState extends State<Business> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(12.0),
-                      child: Container(
-                        child: Center(
-                          heightFactor: 3.5,
-                          widthFactor: 3.2,
-                          child: Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: Text(
-                              'Total Credit\n 5125',
-                              style: TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                              ),
-                            ),
-                          ),
-                        ),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                              color: Colors.black87,
-                              width: 4.0,
-                              style: BorderStyle.solid),
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10.0),
-                            topRight: Radius.circular(10.0),
-                            bottomLeft: Radius.circular(10.0),
-                            bottomRight: Radius.circular(10.0),
+                  child: Container(
+                    child: Center(
+                      heightFactor: 3.5,
+                      widthFactor: 3.2,
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Text(
+                          'Total Credit\n 5125',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
                           ),
                         ),
                       ),
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                          color: Colors.black87,
+                          width: 4.0,
+                          style: BorderStyle.solid),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10.0),
+                        topRight: Radius.circular(10.0),
+                        bottomLeft: Radius.circular(10.0),
+                        bottomRight: Radius.circular(10.0),
+                      ),
+                    ),
+                  ),
                 ),
 
                 // Padding(
@@ -154,7 +151,4 @@ class _BusinessState extends State<Business> {
       ),
     );
   }
-  
-  
-  
 }

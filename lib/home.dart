@@ -11,13 +11,11 @@ import 'package:kash/sign.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
 class Home extends StatefulWidget {
   static const String id = 'home';
   @override
   _HomeState createState() => _HomeState();
 }
-
 
 class _HomeState extends State<Home> {
   final _firestore = FirebaseFirestore.instance;
@@ -25,20 +23,18 @@ class _HomeState extends State<Home> {
   User loggedInUser;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     getCurrentUser();
   }
 
-  void getCurrentUser() async{
+  void getCurrentUser() async {
     try {
-      final user =
-          _auth.currentUser;
+      final user = _auth.currentUser;
       if (user != null) {
         loggedInUser = user;
       }
-    }
-    catch(e){
+    } catch (e) {
       print(e);
     }
   }
@@ -63,7 +59,7 @@ class _HomeState extends State<Home> {
             DrawerHeader(
               child: Padding(
                   padding:
-                  const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   child: CircleAvatar(
                     radius: 30,
                     child: Icon(
@@ -83,10 +79,10 @@ class _HomeState extends State<Home> {
                   color: Colors.blue,
                 ),
               ),
-               onTap: () async {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Profile()));
-            },
+              onTap: () async {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Profile()));
+              },
             ),
             SizedBox(height: 10),
             ListTile(
@@ -114,8 +110,8 @@ class _HomeState extends State<Home> {
                 ),
               ),
               onTap: () async {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Money()));
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Money()));
               },
             ),
             SizedBox(height: 10),
@@ -130,7 +126,7 @@ class _HomeState extends State<Home> {
               ),
               onTap: () async {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Setting()));
+                    MaterialPageRoute(builder: (context) => SettingsWidget()));
               },
             ),
             SizedBox(height: 10),
@@ -148,7 +144,6 @@ class _HomeState extends State<Home> {
                     MaterialPageRoute(builder: (context) => AboutUs()));
               },
             ),
-
             SizedBox(height: 10),
             ListTile(
               title: Text(
@@ -161,11 +156,10 @@ class _HomeState extends State<Home> {
               ),
               onTap: () async {
                 _auth.signOut();
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SignIn()));
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => SignIn()));
               },
             ),
-
             Padding(
               padding: const EdgeInsets.only(top: 70),
               child: Divider(
@@ -190,7 +184,6 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
-
       appBar: AppBar(
         title: Padding(
           padding: const EdgeInsets.all(30.0),
@@ -211,193 +204,184 @@ class _HomeState extends State<Home> {
               color: Colors.white,
               size: 30,
             ),
-
             onPressed: () async {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Profile()));
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Profile()));
             },
           )
         ],
       ),
       body: SafeArea(
         child: Center(
-          child: Column(
-            children: [
+          child: Column(children: [
             SizedBox(
               height: 40,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: TextFormField(
-                  onChanged: ( value) {
+                  onChanged: (value) {
                     amount = int.parse(value);
                   },
                   style: TextStyle(color: Colors.black, fontSize: 16.0),
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[
-              FilteringTextInputFormatter.digitsOnly],
-
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
                   decoration: InputDecoration(
-                      labelText: "Enter your expense",
+                    labelText: "Enter your expense",
                     border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20)),
+                        borderRadius: BorderRadius.circular(20)),
                     hintText: "000",
-                    hintStyle:
-                    TextStyle(color: Colors.black, fontSize: 16.0),
-                  )
-              ),
+                    hintStyle: TextStyle(color: Colors.black, fontSize: 16.0),
+                  )),
             ),
-              SizedBox(
-                height: 30,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child:  Container(
-                  height: 80,
-                  child: CupertinoDatePicker(
-                    mode: CupertinoDatePickerMode.date,
-                    initialDateTime: DateTime.now(),
-                    onDateTimeChanged: (DateTime newDateTime) {
-                      date = newDateTime;
-                    },
-                  ),
-                ),
-              ),
             SizedBox(
               height: 30,
             ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: DropdownButton<String>(
-                  focusColor:Colors.white,
-                  value: category,
-                  //elevation: 5,
-                  style: TextStyle(color: Colors.white),
-                  iconEnabledColor:Colors.black,
-                  items: <String>[
-                    'Food',
-                    'Electricity',
-                    'Travel',
-                    'Rent',
-                    'Cosmetics',
-                    'Grocery',
-                    'Medical',
-                    'Others',
-                  ].map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value,style:TextStyle(color:Colors.black),),
-                    );
-                  }).toList(),
-                  hint:Text(
-                    "Category",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 26,
-                        fontWeight: FontWeight.w500),
-                  ),
-                  onChanged: (String value) {
-                    setState(() {
-                      category = value;
-                    });
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Container(
+                height: 80,
+                child: CupertinoDatePicker(
+                  mode: CupertinoDatePickerMode.date,
+                  initialDateTime: DateTime.now(),
+                  onDateTimeChanged: (DateTime newDateTime) {
+                    date = newDateTime;
                   },
                 ),
               ),
-              SizedBox(
-                height: 30,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: TextField(
-                    onChanged: (value) {
-                      tag = value;
-                    },
-                    style: TextStyle(color: Colors.black, fontSize: 16.0),
-
-                    decoration: InputDecoration(
-                      labelText: "Reference",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      hintText: "Item",
-                      hintStyle:
-                      TextStyle(color: Colors.black, fontSize: 16.0),
-                    )
-
-                ),
-              ),
-              SizedBox(height: 20.0),
-              RaisedButton(
-                onPressed: () async {
-                   await _firestore.collection('users').doc(FirebaseAuth.instance.currentUser.email).collection('expense').add(
-                        {
-                      'amount': amount,
-                      'category' : category,
-                      'date' : date,
-                      'reference' : tag,
-                    });
-                   _xpeseadded(context);
-                },
-                child: Padding(
-
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text(
-                    'Add Expense',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: DropdownButton<String>(
+                focusColor: Colors.white,
+                value: category,
+                //elevation: 5,
+                style: TextStyle(color: Colors.white),
+                iconEnabledColor: Colors.black,
+                items: <String>[
+                  'Food',
+                  'Electricity',
+                  'Travel',
+                  'Rent',
+                  'Cosmetics',
+                  'Grocery',
+                  'Medical',
+                  'Others',
+                ].map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(
+                      value,
+                      style: TextStyle(color: Colors.black),
                     ),
+                  );
+                }).toList(),
+                hint: Text(
+                  "Category",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 26,
+                      fontWeight: FontWeight.w500),
+                ),
+                onChanged: (String value) {
+                  setState(() {
+                    category = value;
+                  });
+                },
+              ),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: TextField(
+                  onChanged: (value) {
+                    tag = value;
+                  },
+                  style: TextStyle(color: Colors.black, fontSize: 16.0),
+                  decoration: InputDecoration(
+                    labelText: "Reference",
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20)),
+                    hintText: "Item",
+                    hintStyle: TextStyle(color: Colors.black, fontSize: 16.0),
+                  )),
+            ),
+            SizedBox(height: 20.0),
+            RaisedButton(
+              onPressed: () async {
+                await _firestore
+                    .collection('users')
+                    .doc(FirebaseAuth.instance.currentUser.email)
+                    .collection('expense')
+                    .add({
+                  'amount': amount,
+                  'category': category,
+                  'date': date,
+                  'reference': tag,
+                });
+                _xpeseadded(context);
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  'Add Expense',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
                   ),
                 ),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50)),
-                color: Colors.blue,
               ),
-              SizedBox(height: 20.0),
-              RaisedButton(
-                onPressed: () async {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Edit()));
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text(
-                    'View/Edit',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50)),
+              color: Colors.blue,
+            ),
+            SizedBox(height: 20.0),
+            RaisedButton(
+              onPressed: () async {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Edit()));
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  'View/Edit',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
                   ),
                 ),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50)),
-                color: Colors.blue,
               ),
-          ]
-          ),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50)),
+              color: Colors.blue,
+            ),
+          ]),
         ),
       ),
-
     );
   }
 
-  _xpeseadded(BuildContext context){
+  _xpeseadded(BuildContext context) {
     return showDialog(
         context: context,
         barrierDismissible: true,
-        builder: (param){
+        builder: (param) {
           return AlertDialog(
             actions: <Widget>[
-              FlatButton(onPressed:() => Navigator.pop(context),
-                  child: Text('OK')
-              ),
+              FlatButton(
+                  onPressed: () => Navigator.pop(context), child: Text('OK')),
             ],
             title: Text('Expense Added !'),
           );
-        }
-    );
+        });
   }
-
 }
-

@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -30,41 +29,41 @@ class _PlanState extends State<Plan> {
       body: SafeArea(
         child: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
-                    .collection('users')
-                    .doc(FirebaseAuth.instance.currentUser.email)
-                    .collection('savemoney')
-                    .snapshots(),
-          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+              .collection('users')
+              .doc(FirebaseAuth.instance.currentUser.email)
+              .collection('savemoney')
+              .snapshots(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasError) {
               return CircularProgressIndicator();
             }
             return ListView(
-              children: snapshot.data.docs.map((DocumentSnapshot documents)
-              {
-                return Card(
-                  elevation: 8.0,
-                  child: ListTile(
-                    leading: Text('Max monthly expense: Rs.${documents['maxex'].toString()}'),
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(documents['purpose']),
-                        IconButton(
-                            icon: Icon(
-                              Icons.delete,
-                              color: Colors.red,
-                            ),
-                            onPressed: () {
-                              _deleFromDialog(context, documents.id, documents['purpose']);
-                            }),
-                      ],
-                    ),
-                    subtitle: Text('in coming ${documents['monthp']} months'),
+                children: snapshot.data.docs.map((DocumentSnapshot documents) {
+              return Card(
+                elevation: 8.0,
+                child: ListTile(
+                  leading: Text(
+                      'Max monthly expense: Rs.${documents['maxex'].toString()}'),
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(documents['purpose']),
+                      IconButton(
+                          icon: Icon(
+                            Icons.delete,
+                            color: Colors.red,
+                          ),
+                          onPressed: () {
+                            _deleFromDialog(
+                                context, documents.id, documents['purpose']);
+                          }),
+                    ],
                   ),
-                );
-              }
-              ).toList()
-            );
+                  subtitle: Text('in coming ${documents['monthp']} months'),
+                ),
+              );
+            }).toList());
           },
         ),
       ),

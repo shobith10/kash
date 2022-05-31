@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class Verify extends StatefulWidget {
@@ -9,7 +7,6 @@ class Verify extends StatefulWidget {
 }
 
 class _VerifyState extends State<Verify> {
-
   Widget build(BuildContext context) {
     String _email;
     return Scaffold(
@@ -47,10 +44,8 @@ class _VerifyState extends State<Verify> {
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20)),
                       hintText: "EMAIL",
-                      hintStyle:
-                      TextStyle(color: Colors.black, fontSize: 16.0),
-                    )
-                ),
+                      hintStyle: TextStyle(color: Colors.black, fontSize: 16.0),
+                    )),
               ),
               SizedBox(
                 height: 40,
@@ -80,6 +75,4 @@ class _VerifyState extends State<Verify> {
       ),
     );
   }
-
-
 }
